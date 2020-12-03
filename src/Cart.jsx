@@ -14,7 +14,7 @@ import LocationCityIcon from '@material-ui/icons/LocationCity';
 import SettingsOverscanIcon from '@material-ui/icons/SettingsOverscan';
 
 class Cart extends Component {
-	createTask = shortName => {
+	createItem = item => {
 		const listItemStyle = {
 			width: '33%',
 			height: '100%'
@@ -25,14 +25,14 @@ class Cart extends Component {
 			height: '100%'
 		}
 
-		const key = shortName.key
-		const cardId = "cart_card" + key
+		const cardId = "cart_card" + item.key
+
 		return (
 			<ListItem style={listItemStyle}>
 				<Card id={cardId}>
-					<ListItemText>{shortName.name}</ListItemText>
+					<ListItemText>{item.name}</ListItemText>
 					<img id="image"
-						src={shortName.image}
+						src={item.image}
 						className="Img"
 						style={imageStyle}
 					/>
@@ -40,17 +40,17 @@ class Cart extends Component {
 						<div>
 							<ListItemIcon>
 								<LocationCityIcon />
-								<ListItemText>{shortName.type}</ListItemText>
+								<ListItemText>{item.type}</ListItemText>
 							</ListItemIcon>
 						</div>
 						<div>
 							<ListItemIcon>
 								<SettingsOverscanIcon />
-								<ListItemText>{shortName.size}</ListItemText>
+								<ListItemText>{item.size}</ListItemText>
 							</ListItemIcon>
 						</div>
-						<ListItemText>$ {shortName.price} million</ListItemText>
-						<ListItemText>Quantity: {shortName.qty}</ListItemText>
+						<ListItemText>$ {item.price} million</ListItemText>
+						<ListItemText>Quantity: {item.qty}</ListItemText>
 					</CardContent>
 					<CardActions>
 						<Button color="primary" variant="contained" onClick={this.props.removeItem}> Remove</Button>
@@ -66,7 +66,7 @@ class Cart extends Component {
 			flexWrap: 'wrap'
 		};
 		const cart = this.props.cart;
-		const listItems = cart.map(this.createTask);
+		const listItems = cart.map(this.createItem);
 		return (
 			<div>
 				<List style={flexContainer}>{listItems}</List>

@@ -14,7 +14,7 @@ import LocationCityIcon from '@material-ui/icons/LocationCity';
 import SettingsOverscanIcon from '@material-ui/icons/SettingsOverscan';
 
 class BuildingsList extends Component {
-	createNames = shortName => {
+	createItem = item => {
 
 		const listItemStyle = {
 			width: '33%',
@@ -26,18 +26,14 @@ class BuildingsList extends Component {
 			height: '100%'
 		}
 
-		const key = shortName.key
-		const cardId = "card" + key
-		const nameId = "name" + key
-		const typeId = "type" + key
-		const sizeId = "size" + key
-		const priceId = "price" + key
+		const cardId = "card" + item.key
+
 		return (
 			<ListItem style={listItemStyle}>
 				<Card id={cardId}>
-					<ListItemText id={nameId}>{shortName.name}</ListItemText>
+					<ListItemText>{item.name}</ListItemText>
 					<img id="image"
-						src={shortName.image}
+						src={item.image}
 						className="Img"
 						style={imageStyle}
 					/>
@@ -45,16 +41,16 @@ class BuildingsList extends Component {
 						<div>
 							<ListItemIcon>
 								<LocationCityIcon />
-								<ListItemText id={typeId}>{shortName.type}</ListItemText>
+								<ListItemText>{item.type}</ListItemText>
 							</ListItemIcon>
 						</div>
 						<div>
 							<ListItemIcon>
 								<SettingsOverscanIcon />
-								<ListItemText id={sizeId}>{shortName.size}</ListItemText>
+								<ListItemText>{item.size}</ListItemText>
 							</ListItemIcon>
 						</div>
-						<ListItemText id={priceId}>$ {shortName.price} million</ListItemText>
+						<ListItemText>$ {item.price} million</ListItemText>
 					</CardContent>
 					<CardActions>
 						<Button color="primary" variant="contained" onClick={this.props.addItem}> Add to Cart</Button>
@@ -70,10 +66,10 @@ class BuildingsList extends Component {
 			flexDirection: 'row',
 			flexWrap: 'wrap'
 		};
-		const names = this.props.names;
-		const listNames = names.map(this.createNames);
+		const buildings = this.props.buildings;
+		const listNames = buildings.map(this.createItem);
 
-		if (names.length === 0) {
+		if (buildings.length === 0) {
 			return <h3>Sorry, there are no results matching your filters. Try a different combination!</h3>
 		}
 		else {

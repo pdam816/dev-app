@@ -23,7 +23,6 @@ class FilteredList extends Component {
 			selectedSortLH: false,
 			selectedSortHL: false
 		}
-
 	}
 
 	handleSelectedSizeAll = () => {

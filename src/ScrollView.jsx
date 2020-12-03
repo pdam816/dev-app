@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 
-
 import BuildingsList from './BuildingsList'
 import FilteredList from './FilteredList'
 import Cart from './Cart'
@@ -10,8 +9,7 @@ import Cart from './Cart'
 class ScrollView extends Component {
 	constructor() {
 		super()
-
-		var names = [
+		const buildings = [
 			{
 				key: 0,
 				name: 'Center for Information Technology (CIT)',
@@ -123,92 +121,96 @@ class ScrollView extends Component {
 		]
 
 		this.state = {
-			names: names,
-			filteredNames: names,
-			shortName: {
-				text: '',
-				key: ''
-			},
-			building: {
-				key: '',
-				name: '',
-				image: '',
-				price: '',
-				type: '',
-				size: '',
-				qty: 1
-			},
+			buildings: buildings,
+			filteredItems: buildings,
 			typeFilter: '',
 			sizeFilter: '',
 			sort: '',
 			cart: [],
 			cost: 0
 		}
-
-		console.log(this.state.filteredNames)
-		console.log(this.state.cart)
 	}
 
 	applyTypeFilters = (tFilter) => {
-		var filteredNames = []
+		var filteredItems = []
 		if (tFilter !== '') {
-			filteredNames = this.state.names.filter(building => building.type === tFilter)
+			filteredItems = this.state.buildings.filter(building => building.type === tFilter)
 		}
 		else {
-			filteredNames = this.state.names
+			filteredItems = this.state.buildings
 		}
 		if (this.state.sizeFilter !== '') {
-			filteredNames = filteredNames.filter(building => building.size === this.state.sizeFilter)
+			filteredItems = filteredItems.filter(building => building.size === this.state.sizeFilter)
+		}
+
+		if (this.state.sort === '') {
+			filteredItems = filteredItems.sort(function (a, b) { return a.name.localeCompare(b.name); })
+		}
+		if (this.state.sort === 'HL') {
+			filteredItems = filteredItems.sort(function (a, b) { return b.price - a.price })
+		}
+		if (this.state.sort === 'LH') {
+			filteredItems = filteredItems.sort(function (a, b) { return a.price - b.price })
 		}
 
 		this.setState({
-			filteredNames: filteredNames,
+			filteredItems: filteredItems,
 			typeFilter: tFilter
 		})
 	}
 
 	applySizeFilters = (sFilter) => {
-		var filteredNames = []
+		var filteredItems = []
 		if (this.state.typeFilter !== '') {
-			filteredNames = this.state.names.filter(building => building.type === this.state.typeFilter)
+			filteredItems = this.state.buildings.filter(building => building.type === this.state.typeFilter)
 		}
 		else {
-			filteredNames = this.state.names
+			filteredItems = this.state.buildings
 		}
 		if (sFilter !== '') {
-			filteredNames = filteredNames.filter(building => building.size === sFilter)
+			filteredItems = filteredItems.filter(building => building.size === sFilter)
+		}
+
+		if (this.state.sort === '') {
+			filteredItems = filteredItems.sort(function (a, b) { return a.name.localeCompare(b.name); })
+		}
+		if (this.state.sort === 'HL') {
+			filteredItems = filteredItems.sort(function (a, b) { return b.price - a.price })
+		}
+		if (this.state.sort === 'LH') {
+			filteredItems = filteredItems.sort(function (a, b) { return a.price - b.price })
 		}
 
 		this.setState({
-			filteredNames: filteredNames,
+			filteredItems: filteredItems,
 			sizeFilter: sFilter
 		})
 	}
 
 	applySort = (doSort) => {
-		var filteredNames = []
+		var filteredItems = []
 		if (this.state.typeFilter !== '') {
-			filteredNames = this.state.names.filter(building => building.type === this.state.typeFilter)
+			filteredItems = this.state.buildings.filter(building => building.type === this.state.typeFilter)
 		}
 		else {
-			filteredNames = this.state.names
+			filteredItems = this.state.buildings
 		}
 		if (this.state.sizeFilter !== '') {
-			filteredNames = filteredNames.filter(building => building.size === this.state.sizeFilter)
+			filteredItems = filteredItems.filter(building => building.size === this.state.sizeFilter)
 		}
 
 		if (doSort === '') {
-			filteredNames = filteredNames.sort(function (a, b) { return a.name.localeCompare(b.name); })
+			filteredItems = filteredItems.sort(function (a, b) { return a.name.localeCompare(b.name); })
 		}
 		if (doSort === 'HL') {
-			filteredNames = filteredNames.sort(function (a, b) { return b.price - a.price })
+			filteredItems = filteredItems.sort(function (a, b) { return b.price - a.price })
 		}
 		if (doSort === 'LH') {
-			filteredNames = filteredNames.sort(function (a, b) { return a.price - b.price })
+			filteredItems = filteredItems.sort(function (a, b) { return a.price - b.price })
 		}
 
 		this.setState({
-			filteredNames: filteredNames,
+			filteredItems: filteredItems,
 			sort: doSort
 		})
 	}
@@ -271,12 +273,10 @@ class ScrollView extends Component {
 		event.preventDefault();
 		const newItem = event.currentTarget.parentNode.parentNode
 
-		console.log(newItem)
-		debugger
 		const cardId = newItem.getAttribute('id')
 		console.log(cardId)
 
-		var item = this.state.names.filter(a => "card" + a.key === cardId)
+		var item = this.state.buildings.filter(a => "card" + a.key === cardId)
 		var inCart = this.state.cart.filter(a => "card" + a.key === cardId)
 
 		if (inCart.length === 0) {
@@ -365,7 +365,7 @@ class ScrollView extends Component {
 					<Grid item xs={12} sm={6}>
 						<Paper style={catalogStyle}>
 							<h2>Catalog</h2>
-							<BuildingsList names={this.state.filteredNames} addItem={this.addItem} />
+							<BuildingsList buildings={this.state.filteredItems} addItem={this.addItem} />
 						</Paper>
 					</Grid>
 					<Grid item xs={12} sm={6}>
