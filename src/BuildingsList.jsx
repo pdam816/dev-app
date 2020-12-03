@@ -15,33 +15,46 @@ import SettingsOverscanIcon from '@material-ui/icons/SettingsOverscan';
 
 class BuildingsList extends Component {
 	createNames = shortName => {
-		const id = shortName.id
-		const nameId = "name" + id
-		const typeId = "type" + id
-		const sizeId = "size" + id
-		const priceId = "price" + id
+
+		const listItemStyle = {
+			width: '33%',
+			height: '100%'
+		}
+
+		const imageStyle = {
+			width: '100%',
+			height: '100%'
+		}
+
+		const key = shortName.key
+		const cardId = "card" + key
+		const nameId = "name" + key
+		const typeId = "type" + key
+		const sizeId = "size" + key
+		const priceId = "price" + key
 		return (
-			<ListItem>
-				<Card>
+			<ListItem style={listItemStyle}>
+				<Card id={cardId}>
 					<ListItemText id={nameId}>{shortName.name}</ListItemText>
 					<img id="image"
 						src={shortName.image}
 						className="Img"
+						style={imageStyle}
 					/>
 					<CardContent>
-						<ListItemIcon>
-							<LocationCityIcon />
-							<ListItemText id={typeId}>{shortName.type}</ListItemText>
-						</ListItemIcon>
-					</CardContent>
-					<CardContent>
-						<ListItemIcon>
-							<SettingsOverscanIcon />
-							<ListItemText id={sizeId}>{shortName.size}</ListItemText>
-						</ListItemIcon>
-					</CardContent>
-					<CardContent>
-						<ListItemText id={priceId}>$ {shortName.price}</ListItemText>
+						<div>
+							<ListItemIcon>
+								<LocationCityIcon />
+								<ListItemText id={typeId}>{shortName.type}</ListItemText>
+							</ListItemIcon>
+						</div>
+						<div>
+							<ListItemIcon>
+								<SettingsOverscanIcon />
+								<ListItemText id={sizeId}>{shortName.size}</ListItemText>
+							</ListItemIcon>
+						</div>
+						<ListItemText id={priceId}>$ {shortName.price} million</ListItemText>
 					</CardContent>
 					<CardActions>
 						<Button color="primary" variant="contained" onClick={this.props.addItem}> Add to Cart</Button>
@@ -52,15 +65,19 @@ class BuildingsList extends Component {
 	}
 
 	render() {
+		const flexContainer = {
+			display: 'flex',
+			flexDirection: 'row',
+			flexWrap: 'wrap'
+		};
 		const names = this.props.names;
-		const sorted = names.sort(function (a, b) { return a.price - b.price })
 		const listNames = names.map(this.createNames);
 
 		if (names.length === 0) {
 			return <h3>Sorry, there are no results matching your filters. Try a different combination!</h3>
 		}
 		else {
-			return <List>{listNames}</List>
+			return <List style={flexContainer}>{listNames}</List>
 		}
 	}
 }

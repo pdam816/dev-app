@@ -169,14 +169,14 @@ class FilteredList extends Component {
 		return (
 			<div>
 				<div>
-					<p>Building size: </p>
+					<p>Building size:</p>
 					<Button color="primary" variant="contained" onClick={this.handleSelectedSizeAll} disabled={this.state.selectedSizeAll}> All</Button>
 					<Button color="primary" variant="contained" onClick={this.handleSelectedSizeSmall} disabled={this.state.selectedSizeSmall}> Small</Button>
 					<Button color="primary" variant="contained" onClick={this.handleSelectedSizeMedium} disabled={this.state.selectedSizeMedium}> Medium</Button>
 					<Button color="primary" variant="contained" onClick={this.handleSelectedSizeLarge} disabled={this.state.selectedSizeLarge}> Large</Button>
 				</div>
 				<div>
-					<p>Building function: </p>
+					<p>Building function:</p>
 					<Button color="primary" variant="contained" onClick={this.handleSelectedTypeAll} disabled={this.state.selectedTypeAll}> All</Button>
 					<Button color="primary" variant="contained" onClick={this.handleSelectedTypeAcademic} disabled={this.state.selectedTypeAcademic}> Academic</Button>
 					<Button color="primary" variant="contained" onClick={this.handleSelectedTypeAdmin} disabled={this.state.selectedTypeAdmin}> Administration</Button>
@@ -185,7 +185,7 @@ class FilteredList extends Component {
 					<Button color="primary" variant="contained" onClick={this.handleSelectedTypeStudentAct} disabled={this.state.selectedTypeStudentAct}> Student Activities</Button>
 				</div>
 				<div>
-					<p> Sort by Price:</p>
+					<p>Sort by Price:</p>
 					<Button color="primary" variant="contained" onClick={this.handleSelectedSortNone} disabled={this.state.selectedSortNone}> None</Button>
 					<Button color="primary" variant="contained" onClick={this.handleSelectedSortLH} disabled={this.state.selectedSortLH}> Lowest to Highest</Button>
 					<Button color="primary" variant="contained" onClick={this.handleSelectedSortHL} disabled={this.state.selectedSortHL}> Highest to Lowest</Button>

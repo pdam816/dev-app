@@ -4,15 +4,13 @@ import './index.css';
 
 import ScrollView from './ScrollView'
 
-
 function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <p>
-          Build-A-Brown
-        </p>
+        <h2>Build-A-Brown</h2>
       </header>
+      <p className="Subtitle">Shop for buildings to make your perfect BrownU campus!</p>
       <ScrollView />
     </div>
 
