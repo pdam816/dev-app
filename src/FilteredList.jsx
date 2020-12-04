@@ -4,11 +4,15 @@ import { Button } from '@material-ui/core'
 
 import './FilteredList.css';
 
+/**
+ * Component which handles and renders the filtering and sorting elements of the page.
+ */
 class FilteredList extends Component {
 
 	constructor(props) {
 		super(props)
 		this.state = {
+			// booleans to toggle filter buttons on/off
 			selectedSizeAll: true,
 			selectedSizeSmall: false,
 			selectedSizeMedium: false,
@@ -25,8 +29,13 @@ class FilteredList extends Component {
 		}
 	}
 
+	/**
+	 * Methods to set state variables which toggle on/off filter buttons and 
+	 * calls the passed in prop functions to update list accordingly
+	 */
 	handleSelectedSizeAll = () => {
 		this.setState({
+			// toggle on selected button and disable all other buttons
 			selectedSizeAll: true,
 			selectedSizeSmall: false,
 			selectedSizeMedium: false,
@@ -137,6 +146,10 @@ class FilteredList extends Component {
 		this.props.filterOnTypeStudentActivities()
 	}
 
+	/**
+	* Methods to set state variables which toggle on/off sorting buttons and
+	* calls the passed in prop functions to update list accordingly
+	*/
 	handleSelectedSortNone = () => {
 		this.setState({
 			selectedSortNone: true,
@@ -164,9 +177,13 @@ class FilteredList extends Component {
 		this.props.sortHL()
 	}
 
+	/**
+	 * Renders the filter elements
+	 */
 	render() {
 		return (
 			<div>
+				{/** Elements to filter by size */}
 				<div>
 					<p>Building size:</p>
 					<Button color="primary" variant="contained" onClick={this.handleSelectedSizeAll} disabled={this.state.selectedSizeAll}> All</Button>
@@ -174,6 +191,7 @@ class FilteredList extends Component {
 					<Button color="primary" variant="contained" onClick={this.handleSelectedSizeMedium} disabled={this.state.selectedSizeMedium}> Medium</Button>
 					<Button color="primary" variant="contained" onClick={this.handleSelectedSizeLarge} disabled={this.state.selectedSizeLarge}> Large</Button>
 				</div>
+				{/** Elements to filter by type */}
 				<div>
 					<p>Building function:</p>
 					<Button color="primary" variant="contained" onClick={this.handleSelectedTypeAll} disabled={this.state.selectedTypeAll}> All</Button>
@@ -183,6 +201,7 @@ class FilteredList extends Component {
 					<Button color="primary" variant="contained" onClick={this.handleSelectedTypeResidence} disabled={this.state.selectedTypeResidence}> Residence</Button>
 					<Button color="primary" variant="contained" onClick={this.handleSelectedTypeStudentAct} disabled={this.state.selectedTypeStudentAct}> Student Activities</Button>
 				</div>
+				{/** Elements to sort */}
 				<div>
 					<p>Sort by Price:</p>
 					<Button color="primary" variant="contained" onClick={this.handleSelectedSortNone} disabled={this.state.selectedSortNone}> None</Button>

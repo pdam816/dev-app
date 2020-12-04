@@ -13,8 +13,17 @@ import {
 import LocationCityIcon from '@material-ui/icons/LocationCity';
 import SettingsOverscanIcon from '@material-ui/icons/SettingsOverscan';
 
+/**
+ * Component which handles and renders the Cart element, which displays elements
+ * added to 'cart'
+ */
 class Cart extends Component {
+	/**
+	 * Renders a cart element.
+	 * @param {*} item - a building element
+	 */
 	createItem = item => {
+		// styling for cards in cart
 		const listItemStyle = {
 			width: '33%',
 			height: '100%'
@@ -59,6 +68,10 @@ class Cart extends Component {
 			</ListItem >
 		);
 	};
+
+	/**
+	 * Renders the Cart and its elements.
+	 */
 	render() {
 		const flexContainer = {
 			display: 'flex',

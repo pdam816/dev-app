@@ -13,9 +13,16 @@ import {
 import LocationCityIcon from '@material-ui/icons/LocationCity';
 import SettingsOverscanIcon from '@material-ui/icons/SettingsOverscan';
 
+/**
+ * Component which renders the catalog of sortable and filterable list of buildings.
+ */
 class BuildingsList extends Component {
+	/**
+	 * Renders an item (a building)
+	 * @param {} item - a building to be rendered.
+	 */
 	createItem = item => {
-
+		// stylings for the item
 		const listItemStyle = {
 			width: '33%',
 			height: '100%'
@@ -60,21 +67,24 @@ class BuildingsList extends Component {
 		)
 	}
 
+	/**
+	 * Renders the item elements in a list.
+	 */
 	render() {
+		// styling for the list
 		const flexContainer = {
 			display: 'flex',
 			flexDirection: 'row',
 			flexWrap: 'wrap'
 		};
 		const buildings = this.props.buildings;
+		// maps createItem function for every building
 		const listNames = buildings.map(this.createItem);
 
-		if (buildings.length === 0) {
+		if (buildings.length === 0)
 			return <h3>Sorry, there are no results matching your filters. Try a different combination!</h3>
-		}
-		else {
-			return <List style={flexContainer}>{listNames}</List>
-		}
+		else return <List style={flexContainer}>{listNames}</List>
+
 	}
 }
 

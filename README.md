@@ -1,3 +1,50 @@
+# Program Architecture
+
+## Organization of Components
+
+App.js : Main javascript file.
+ScrollView.jsx : Parent component which renders its sub-components -- BuildingsList, FilteredList, CartList.
+BuildingsList.jsx : The Component which renders the 'Catalog' section displaying the sortable/filterable list.
+FilteredList.js : The Component which renders the filtering section displaying the filters which could be applied to the list.
+Cart.jsx : The Component which renders the cart and its elements.
+
+## How Data is Passed Through Components
+
+ScrollView is the parent Component. It implements the functions for the filtering list, sorting list, adding to cart, and removing from cart actions. It also maintains the main states of the page, including the complete list of items, the filtered list of items, the cart of added items, the type and size to filter on, and the sort order.
+
+The functions for filtering and sorting are passed into FilteredList to handle the onClick() actions of the corresponding buttons.
+
+The function addItem() is passed into BuildingsList to handle the onClick() action of adding an item to the cart. Also, the filtered list state of items is passed into BuildingList for rendering.
+
+The function removeItem() is passed into Cart to handle the onClick() action of removing from the cart. Also, the cart state of items is passed into Cart for rendering.
+
+## How The User Triggers State Changes
+
+If the user clicks 'Add to Cart' for any of the items in the Catalog section, it will update state.cart to include that item. If the item wasn't previously in the cart, it would be added to the cart. If it was previously in the cart, the counter of that item in the cart would increment. It will also update state.cost to reflect the new cost of all cart items.
+
+If the user clicks 'Remove' for any of the items in the Cart section, it will update state.cart to remove that item. Pressing remove will update state.cost to reflect the new cost of all cart items.
+
+Filtering has two categories: type and size. Clicking on a type button will sort the catalog list by that type. Clicking on a size button will sort the list by that size. Clicking 'All' for either filters will remove the respective filter.
+
+If a user clicks on a sort order, the list in the catalog will sort by the specified order. If 'None' is clicked, the list defaults to its default order (alphabetical). 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

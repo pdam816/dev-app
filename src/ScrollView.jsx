@@ -6,9 +6,15 @@ import BuildingsList from './BuildingsList'
 import FilteredList from './FilteredList'
 import Cart from './Cart'
 
+/**
+ * Component which serves as the parent component to the BuildingsList, FilteredList,
+ * and Cart children components.
+ */
 class ScrollView extends Component {
 	constructor() {
 		super()
+
+		// an array of building jsons
 		const buildings = [
 			{
 				key: 0,
@@ -120,153 +126,29 @@ class ScrollView extends Component {
 			}
 		]
 
+
 		this.state = {
+			// original list of buildings (complete list)
 			buildings: buildings,
+			// displayed list of buildings
 			filteredItems: buildings,
+			// type filter ('Academic', 'Dining', etc.)
 			typeFilter: '',
+			// size filter ('Small', 'Medium', 'Large')
 			sizeFilter: '',
+			// sort from high to low ('HL') or low to high ('LH')
 			sort: '',
+			// elements in cart
 			cart: [],
+			// cost of elements in cart
 			cost: 0
 		}
 	}
 
-	applyTypeFilters = (tFilter) => {
-		var filteredItems = []
-		if (tFilter !== '') {
-			filteredItems = this.state.buildings.filter(building => building.type === tFilter)
-		}
-		else {
-			filteredItems = this.state.buildings
-		}
-		if (this.state.sizeFilter !== '') {
-			filteredItems = filteredItems.filter(building => building.size === this.state.sizeFilter)
-		}
-
-		if (this.state.sort === '') {
-			filteredItems = filteredItems.sort(function (a, b) { return a.name.localeCompare(b.name); })
-		}
-		if (this.state.sort === 'HL') {
-			filteredItems = filteredItems.sort(function (a, b) { return b.price - a.price })
-		}
-		if (this.state.sort === 'LH') {
-			filteredItems = filteredItems.sort(function (a, b) { return a.price - b.price })
-		}
-
-		this.setState({
-			filteredItems: filteredItems,
-			typeFilter: tFilter
-		})
-	}
-
-	applySizeFilters = (sFilter) => {
-		var filteredItems = []
-		if (this.state.typeFilter !== '') {
-			filteredItems = this.state.buildings.filter(building => building.type === this.state.typeFilter)
-		}
-		else {
-			filteredItems = this.state.buildings
-		}
-		if (sFilter !== '') {
-			filteredItems = filteredItems.filter(building => building.size === sFilter)
-		}
-
-		if (this.state.sort === '') {
-			filteredItems = filteredItems.sort(function (a, b) { return a.name.localeCompare(b.name); })
-		}
-		if (this.state.sort === 'HL') {
-			filteredItems = filteredItems.sort(function (a, b) { return b.price - a.price })
-		}
-		if (this.state.sort === 'LH') {
-			filteredItems = filteredItems.sort(function (a, b) { return a.price - b.price })
-		}
-
-		this.setState({
-			filteredItems: filteredItems,
-			sizeFilter: sFilter
-		})
-	}
-
-	applySort = (doSort) => {
-		var filteredItems = []
-		if (this.state.typeFilter !== '') {
-			filteredItems = this.state.buildings.filter(building => building.type === this.state.typeFilter)
-		}
-		else {
-			filteredItems = this.state.buildings
-		}
-		if (this.state.sizeFilter !== '') {
-			filteredItems = filteredItems.filter(building => building.size === this.state.sizeFilter)
-		}
-
-		if (doSort === '') {
-			filteredItems = filteredItems.sort(function (a, b) { return a.name.localeCompare(b.name); })
-		}
-		if (doSort === 'HL') {
-			filteredItems = filteredItems.sort(function (a, b) { return b.price - a.price })
-		}
-		if (doSort === 'LH') {
-			filteredItems = filteredItems.sort(function (a, b) { return a.price - b.price })
-		}
-
-		this.setState({
-			filteredItems: filteredItems,
-			sort: doSort
-		})
-	}
-
-	filterOnTypeAll = event => {
-		this.applyTypeFilters('')
-	}
-
-	filterOnTypeAcademic = event => {
-		this.applyTypeFilters('Academic')
-	}
-
-	filterOnTypeAdministration = event => {
-		this.applyTypeFilters('Administration')
-	}
-
-	filterOnTypeDining = event => {
-		this.applyTypeFilters('Dining')
-	}
-
-	filterOnTypeResidence = event => {
-		this.applyTypeFilters('Residence')
-	}
-
-	filterOnTypeStudentActivities = event => {
-		this.applyTypeFilters('Student Activities')
-	}
-
-	filterOnSizeAll = event => {
-		this.applySizeFilters('')
-	}
-
-	filterOnSizeSmall = event => {
-		this.applySizeFilters('Small')
-	}
-
-	filterOnSizeMedium = event => {
-		this.applySizeFilters('Medium')
-	}
-
-	filterOnSizeLarge = event => {
-		this.applySizeFilters('Large')
-	}
-
-	sortNone = event => {
-		this.applySort('')
-	}
-
-	sortLH = event => {
-		this.applySort('LH')
-	}
-
-	sortHL = event => {
-		this.applySort('HL')
-	}
-
+	/**
+	 * Function to handle adding an item to the Cart.
+	 * @param {} event - the event which called this handler
+	 */
 	addItem = event => {
 		var cart = []
 		var cost = this.state.cost
@@ -285,9 +167,7 @@ class ScrollView extends Component {
 		}
 		else {
 			inCart[0].qty += 1
-			console.log(cardId)
-			cart = this.state.cart.filter(a => "card" + a.key !== cardId)
-			cart = [cart, inCart[0]].flat()
+			cart = this.state.cart
 			cost += inCart[0].price
 		}
 
@@ -299,6 +179,10 @@ class ScrollView extends Component {
 		});
 	};
 
+	/**
+	 * Function which handles when an item is removed from the cart.
+	 * @param {} event - event which called this handler
+	 */
 	removeItem = event => {
 		var cart = []
 		var removed = []
@@ -313,6 +197,7 @@ class ScrollView extends Component {
 
 		cost -= removed[0].price * removed[0].qty
 		cost = Math.round((cost + Number.EPSILON) * 100) / 100
+		removed[0].qty = 1
 
 		this.setState({
 			cart: cart,
@@ -320,7 +205,67 @@ class ScrollView extends Component {
 		})
 	}
 
+	/**
+	 * Function which applies the type filter along with state.size and state.sort filters.
+	 * @param {*} tFilter - string representation of what type to sort on
+	 * @param {*} sFilter - string representation of what size to sort on
+	 * @param {*} sort - string representation of sort order
+	 */
+	applyFilters = (tFilter, sFilter, sort) => {
+		var filteredItems = []
+		if (tFilter !== '')
+			filteredItems = this.state.buildings.filter(building => building.type === tFilter)
+		else filteredItems = this.state.buildings
+
+		if (sFilter !== '')
+			filteredItems = filteredItems.filter(building => building.size === sFilter)
+
+		if (sort === '')
+			filteredItems = filteredItems.sort(function (a, b) { return a.name.localeCompare(b.name); })
+
+		if (sort === 'HL')
+			filteredItems = filteredItems.sort(function (a, b) { return b.price - a.price })
+
+		if (sort === 'LH')
+			filteredItems = filteredItems.sort(function (a, b) { return a.price - b.price })
+
+		this.setState({
+			filteredItems: filteredItems,
+			typeFilter: tFilter,
+			sizeFilter: sFilter,
+			sort: sort
+		})
+	}
+
+	/**
+	 * Methods which specify the string representation on what to filter/sort on.
+	 * @param {} event
+	 */
+	filterOnTypeAll = event => { this.applyFilters('', this.state.sizeFilter, this.state.sort) }
+	filterOnTypeAcademic = event => { this.applyFilters('Academic', this.state.sizeFilter, this.state.sort) }
+	filterOnTypeAdministration = event => { this.applyFilters('Administration', this.state.sizeFilter, this.state.sort) }
+	filterOnTypeDining = event => { this.applyFilters('Dining', this.state.sizeFilter, this.state.sort) }
+	filterOnTypeResidence = event => { this.applyFilters('Residence', this.state.sizeFilter, this.state.sort) }
+	filterOnTypeStudentActivities = event => { this.applyFilters('Student Activities', this.state.sizeFilter, this.state.sort) }
+	filterOnSizeAll = event => { this.applyFilters(this.state.typeFilter, '', this.state.sort) }
+	filterOnSizeSmall = event => { this.applyFilters(this.state.typeFilter, 'Small', this.state.sort) }
+	filterOnSizeMedium = event => { this.applyFilters(this.state.typeFilter, 'Medium', this.state.sort) }
+	filterOnSizeLarge = event => { this.applyFilters(this.state.typeFilter, 'Large', this.state.sort) }
+
+	/**
+	 * Methods which specify the string representation of what to sort on.
+	 * @param {} event 
+	 */
+	sortNone = event => { this.applyFilters(this.state.typeFilter, this.state.sizeFilter, '') }
+	sortLH = event => { this.applyFilters(this.state.typeFilter, this.state.sizeFilter, 'LH') }
+	sortHL = event => { this.applyFilters(this.state.typeFilter, this.state.sizeFilter, 'HL') }
+
+
+	/**
+	 * Renders the sub-components in a grid layout.
+	 */
 	render() {
+		// stylings for the grid
 		const filtersStyle = {
 			padding: '10px',
 			marginLeft: 'auto',
@@ -343,6 +288,7 @@ class ScrollView extends Component {
 		return (
 			<div>
 				<Grid container spacing={3}>
+					{/**Section for filtering and sorting */}
 					<Grid item xs={12}>
 						<Paper style={filtersStyle}>
 							<FilteredList
@@ -362,12 +308,14 @@ class ScrollView extends Component {
 							/>
 						</Paper>
 					</Grid>
+					{/** Section for the Catalog of buildings */}
 					<Grid item xs={12} sm={6}>
 						<Paper style={catalogStyle}>
 							<h2>Catalog</h2>
 							<BuildingsList buildings={this.state.filteredItems} addItem={this.addItem} />
 						</Paper>
 					</Grid>
+					{/**Section for the cart. */}
 					<Grid item xs={12} sm={6}>
 						<Paper style={catalogStyle}>
 							<h2>Cart</h2>
