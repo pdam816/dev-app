@@ -193,7 +193,7 @@ class FilteredList extends Component {
 				</div>
 				{/** Elements to filter by type */}
 				<div>
-					<p>Building function:</p>
+					<p>Building type:</p>
 					<Button color="primary" variant="contained" onClick={this.handleSelectedTypeAll} disabled={this.state.selectedTypeAll}> All</Button>
 					<Button color="primary" variant="contained" onClick={this.handleSelectedTypeAcademic} disabled={this.state.selectedTypeAcademic}> Academic</Button>
 					<Button color="primary" variant="contained" onClick={this.handleSelectedTypeAdmin} disabled={this.state.selectedTypeAdmin}> Administration</Button>
